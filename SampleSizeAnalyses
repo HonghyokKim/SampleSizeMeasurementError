@@ -551,13 +551,13 @@ b4<-b4 + scale_fill_discrete(name = expression(gamma[1]))+xlab("R.sq (exposure m
 
 library(ggplot2)
 library(gridExtra)
-png("FOLDER/SampleSizeExample_Figure2.png",width=5*2,height=4*1,res=300,units="in")
+png("FOLDER/SampleSizeExample_Figure2Top.png",width=5*2,height=4*1,res=300,units="in")
 grid.arrange(b1, b2, ncol = 2, nrow = 1)
 dev.off()
 
 library(ggplot2)
 library(gridExtra)
-png("FOLDER/SampleSizeExample_Figure3.png",width=5*2,height=4*1,res=300,units="in")
+png("FOLDER/SampleSizeExample_Figure2Bottom.png",width=5*2,height=4*1,res=300,units="in")
 grid.arrange(b3,b4, ncol = 2, nrow = 1)
 dev.off()
 
