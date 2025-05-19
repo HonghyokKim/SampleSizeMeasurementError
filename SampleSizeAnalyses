@@ -1,0 +1,563 @@
+###HONGHYOK KIM  Sep 27, 2024
+
+#####PM25 (Obtain FAQSE estimates from the US EPA website)
+
+library(data.table)
+
+##COUNTY FIPS: Lake 097, McHenry 111, Kane 089, DuPage 043, Kendall 093, Grundy 063, Will 197, Cook 031
+
+pm25_2010<-read.csv("FOLDER/2010_pm25_daily_average.txt")
+pm25_2010$FIPS_County<-substr(pm25_2010$FIPS,1,5)
+pm25_2010_sel<-subset(pm25_2010,FIPS_County %in% c("17097","17111","17089","17043","17093","17063","17197","17031"))
+pm25_2010_sel$pm25<-pm25_2010_sel$pm25_daily_average.ug.m3.
+
+pm25_2011<-read.csv("FOLDER/2011_pm25_daily_average.txt")
+pm25_2011$FIPS_County<-substr(pm25_2011$FIPS,1,5)
+pm25_2011_sel<-subset(pm25_2011,FIPS_County %in% c("17097","17111","17089","17043","17093","17063","17197","17031"))
+pm25_2011_sel$pm25<-pm25_2011_sel$pm25_daily_average.ug.m3.
+
+pm25_2012<-read.csv("FOLDER/2012_pm25_daily_average.txt")
+pm25_2012$FIPS_County<-substr(pm25_2012$FIPS,1,5)
+pm25_2012_sel<-subset(pm25_2012,FIPS_County %in% c("17097","17111","17089","17043","17093","17063","17197","17031"))
+pm25_2012_sel$pm25<-pm25_2012_sel$pm25_daily_average.ug.m3.
+
+pm25_2013<-read.csv("FOLDER/2013_pm25_daily_average.txt")
+pm25_2013$FIPS_County<-substr(pm25_2013$FIPS,1,5)
+pm25_2013_sel<-subset(pm25_2013,FIPS_County %in% c("17097","17111","17089","17043","17093","17063","17197","17031"))
+pm25_2013_sel$pm25<-pm25_2013_sel$pm25_daily_average.ug.m3.
+
+pm25_2014<-read.csv("FOLDER/2014_pm25_daily_average.txt")
+pm25_2014$FIPS_County<-substr(pm25_2014$FIPS,1,5)
+pm25_2014_sel<-subset(pm25_2014,FIPS_County %in% c("17097","17111","17089","17043","17093","17063","17197","17031"))
+pm25_2014_sel$pm25<-pm25_2014_sel$pm25_daily_average.ug.m3.
+
+pm25_2015<-read.csv("FOLDER/2015_pm25_daily_average.txt")
+colnames(pm25_2015)<-colnames(pm25_2014)[1:6]
+pm25_2015$FIPS_County<-substr(pm25_2015$FIPS,1,5)
+pm25_2015_sel<-subset(pm25_2015,FIPS_County %in% c("17097","17111","17089","17043","17093","17063","17197","17031"))
+pm25_2015_sel$pm25<-pm25_2015_sel$pm25_daily_average.ug.m3.
+
+
+pm25_2016<-read.csv("FOLDER/2016_pm25_daily_average.txt")
+colnames(pm25_2016)<-colnames(pm25_2014)[1:6]
+pm25_2016$FIPS_County<-substr(pm25_2016$FIPS,1,5)
+pm25_2016_sel<-subset(pm25_2016,FIPS_County %in% c("17097","17111","17089","17043","17093","17063","17197","17031"))
+pm25_2016_sel$pm25<-pm25_2016_sel$pm25_daily_average.ug.m3.
+
+pm25_2017<-read.csv("FOLDER/2017_pm25_daily_average.txt")
+pm25_2017$FIPS_County<-substr(pm25_2017$FIPS,1,5)
+pm25_2017_sel<-subset(pm25_2017,FIPS_County %in% c("17097","17111","17089","17043","17093","17063","17197","17031"))
+pm25_2017_sel$pm25<-pm25_2017_sel$pm25_daily_average.ug.m3.
+
+
+pm25_2018<-read.csv("FOLDER/2018_pm25_daily_average.txt")
+pm25_2018$FIPS_County<-substr(pm25_2018$FIPS,1,5)
+pm25_2018_sel<-subset(pm25_2018,FIPS_County %in% c("17097","17111","17089","17043","17093","17063","17197","17031"))
+pm25_2018_sel$pm25<-pm25_2018_sel$pm25_daily_average.ug.m3.
+
+
+
+library(dplyr)
+library(zoo)
+tot<-tot %>%
+  group_by(FIPS) %>%
+  mutate(moving_avg = rollmean(pm25, k=7, fill=NA, align='right'))
+
+pm25_2011_sel<-pm25_2011_sel %>%
+  group_by(FIPS) %>%
+  mutate(moving_avg = rollmean(pm25, k=7, fill=NA, align='right'))
+
+pm25_2012_sel<-pm25_2012_sel %>%
+  group_by(FIPS) %>%
+  mutate(moving_avg = rollmean(pm25, k=7, fill=NA, align='right'))
+
+pm25_2013_sel<-pm25_2013_sel %>%
+  group_by(FIPS) %>%
+  mutate(moving_avg = rollmean(pm25, k=7, fill=NA, align='right'))
+
+pm25_2014_sel<-pm25_2014_sel %>%
+  group_by(FIPS) %>%
+  mutate(moving_avg = rollmean(pm25, k=7, fill=NA, align='right'))
+
+pm25_2015_sel<-pm25_2015_sel %>%
+  group_by(FIPS) %>%
+  mutate(moving_avg = rollmean(pm25, k=7, fill=NA, align='right'))
+
+pm25_2016_sel<-pm25_2016_sel %>%
+  group_by(FIPS) %>%
+  mutate(moving_avg = rollmean(pm25, k=7, fill=NA, align='right'))
+
+pm25_2017_sel<-pm25_2017_sel %>%
+  group_by(FIPS) %>%
+  mutate(moving_avg = rollmean(pm25, k=7, fill=NA, align='right'))
+
+pm25_2018_sel<-pm25_2018_sel %>%
+  group_by(FIPS) %>%
+  mutate(moving_avg = rollmean(pm25, k=7, fill=NA, align='right'))
+
+
+
+
+tot<-rbind(
+  pm25_2015_sel,
+  pm25_2016_sel,
+  pm25_2017_sel,
+  pm25_2018_sel)
+
+tot<-tot[!is.na(tot$moving_avg),]
+
+FIPS.list<-unique(tot$FIPS)
+
+var.sample1<-vector("list",1)
+
+library(parallel)
+for (qq in seq(1,250)) {
+  var.sample1[[qq]]<-do.call(c,mclapply(seq(FIPS.list),mc.cores=13,FUN=function(kk) {
+    
+    case<-subset(tot,FIPS==FIPS.list[kk])
+    case<-case[sample(nrow(case),1),]
+    con<-subset(tot,FIPS %in% FIPS.list[-kk])
+    con<-con[sample(nrow(con),1),]
+    var(rbind(case,con)$moving_avg)
+  }))
+  print(qq)
+}
+
+hist(var.sample1[[1]])
+
+match.1.var<-do.call(c,mclapply(seq(250),mc.cores=13,FUN=function(kk) {
+  mean(var.sample1[[kk]])}))
+
+
+var.sample2<-vector("list",1)
+library(parallel)
+for (qq in seq(1,250)) {
+  var.sample2[[qq]]<-do.call(c,mclapply(seq(FIPS.list),mc.cores=13,FUN=function(kk) {
+    
+    case<-subset(tot,FIPS==FIPS.list[kk])
+    case<-case[sample(nrow(case),1),]
+    con<-subset(tot,FIPS %in% FIPS.list[-kk])
+    con<-con[sample(nrow(con),2),]
+    var(rbind(case,con)$moving_avg)
+  }))
+  print(qq)
+}
+
+hist(var.sample2[[1]])
+
+match.2.var<-do.call(c,mclapply(seq(250),mc.cores=13,FUN=function(kk) {
+  mean(var.sample2[[kk]])}))
+
+
+
+
+var.sample3<-vector("list",1)
+library(parallel)
+for (qq in seq(1,250)) {
+  var.sample3[[qq]]<-do.call(c,mclapply(seq(FIPS.list),mc.cores=13,FUN=function(kk) {
+    
+    case<-subset(tot,FIPS==FIPS.list[kk])
+    case<-case[sample(nrow(case),1),]
+    con<-subset(tot,FIPS %in% FIPS.list[-kk])
+    con<-con[sample(nrow(con),3),]
+    var(rbind(case,con)$moving_avg)
+  }))
+  print(qq)
+}
+
+hist(var.sample3[[1]])
+
+match.3.var<-do.call(c,mclapply(seq(250),mc.cores=13,FUN=function(kk) {
+  mean(var.sample3[[kk]])}))
+
+
+
+
+var.sample4<-vector("list",1)
+library(parallel)
+for (qq in seq(1,250)) {
+  var.sample4[[qq]]<-do.call(c,mclapply(seq(FIPS.list),mc.cores=13,FUN=function(kk) {
+    
+    case<-subset(tot,FIPS==FIPS.list[kk])
+    case<-case[sample(nrow(case),1),]
+    con<-subset(tot,FIPS %in% FIPS.list[-kk])
+    con<-con[sample(nrow(con),4),]
+    var(rbind(case,con)$moving_avg)
+  }))
+  print(qq)
+}
+
+hist(var.sample4[[1]])
+
+match.4.var<-do.call(c,mclapply(seq(250),mc.cores=13,FUN=function(kk) {
+  mean(var.sample4[[kk]])}))
+
+save(match.1.var,match.2.var,match.3.var,match.4.var,file="FOLDER/TheOther250.RData")
+
+#save(match.1.var,match.2.var,match.3.var,match.4.var,file="FOLDER/First100.RData")
+
+
+
+###Exposure variance median ~7.5;  regression calibration + more precise models... so, say 8.
+DesiredPowerZ<-0.8
+
+
+
+
+ratio1.1<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.1.var)*0.75)
+ratio1.2<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.1.var)*0.5)
+ratio1.3<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.1.var)*0.25)
+
+ratio2.1<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.2.var)*0.75)
+ratio2.2<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.2.var)*0.5)
+ratio2.3<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.2.var)*0.25)
+
+ratio3.1<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.3.var)*0.75)
+ratio3.2<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.3.var)*0.5)
+ratio3.3<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.3.var)*0.25)
+
+ratio4.1<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.4.var)*0.75)
+ratio4.2<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.4.var)*0.5)
+ratio4.3<-(1.96+DesiredPowerZ)^2/(((0.01^2)*match.4.var)*0.25)
+
+
+Ratio1<-rbind(
+  data.frame(values=ratio1.1,R.sq=0.75,Control=1),
+  data.frame(values=ratio1.2,R.sq=0.5,Control=1),
+  data.frame(values=ratio1.3,R.sq=0.25,Control=1))
+
+Ratio2<-rbind(
+  data.frame(values=ratio2.1,R.sq=0.75,Control=2),
+  data.frame(values=ratio2.2,R.sq=0.5,Control=2),
+  data.frame(values=ratio2.3,R.sq=0.25,Control=2))
+
+Ratio3<-rbind(
+  data.frame(values=ratio3.1,R.sq=0.75,Control=3),
+  data.frame(values=ratio3.2,R.sq=0.5,Control=3),
+  data.frame(values=ratio3.3,R.sq=0.25,Control=3))
+
+Ratio4<-rbind(
+  data.frame(values=ratio4.1,R.sq=0.75,Control=4),
+  data.frame(values=ratio4.2,R.sq=0.5,Control=4),
+  data.frame(values=ratio4.3,R.sq=0.25,Control=4))
+
+Ratios<-rbind(Ratio1,Ratio2,Ratio3,Ratio4)
+
+
+
+
+ratio.n1.1<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.1.var)*0.75)
+ratio.n1.2<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.1.var)*0.5)
+ratio.n1.3<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.1.var)*0.25)
+
+ratio.n2.1<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.2.var)*0.75)
+ratio.n2.2<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.2.var)*0.5)
+ratio.n2.3<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.2.var)*0.25)
+
+ratio.n3.1<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.3.var)*0.75)
+ratio.n3.2<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.3.var)*0.5)
+ratio.n3.3<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.3.var)*0.25)
+
+ratio.n4.1<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.4.var)*0.75)
+ratio.n4.2<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.4.var)*0.5)
+ratio.n4.3<-(1.96+DesiredPowerZ)^2/((((0.01*0.919/0.88)^2)*match.4.var)*0.25)
+
+
+ratio.n1<-rbind(
+  data.frame(values=ratio.n1.1,R.sq=0.75,Control=1),
+  data.frame(values=ratio.n1.2,R.sq=0.5,Control=1),
+  data.frame(values=ratio.n1.3,R.sq=0.25,Control=1))
+
+ratio.n2<-rbind(
+  data.frame(values=ratio.n2.1,R.sq=0.75,Control=2),
+  data.frame(values=ratio.n2.2,R.sq=0.5,Control=2),
+  data.frame(values=ratio.n2.3,R.sq=0.25,Control=2))
+
+ratio.n3<-rbind(
+  data.frame(values=ratio.n3.1,R.sq=0.75,Control=3),
+  data.frame(values=ratio.n3.2,R.sq=0.5,Control=3),
+  data.frame(values=ratio.n3.3,R.sq=0.25,Control=3))
+
+ratio.n4<-rbind(
+  data.frame(values=ratio.n4.1,R.sq=0.75,Control=4),
+  data.frame(values=ratio.n4.2,R.sq=0.5,Control=4),
+  data.frame(values=ratio.n4.3,R.sq=0.25,Control=4))
+
+Ratios.n<-rbind(ratio.n1,ratio.n2,ratio.n3,ratio.n4)
+
+
+
+
+
+
+ratio.nn1.1<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.1.var)*0.75)
+ratio.nn1.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.1.var)*0.5)
+ratio.nn1.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.1.var)*0.25)
+
+ratio.nn2.1<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.2.var)*0.75)
+ratio.nn2.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.2.var)*0.5)
+ratio.nn2.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.2.var)*0.25)
+
+ratio.nn3.1<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.3.var)*0.75)
+ratio.nn3.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.3.var)*0.5)
+ratio.nn3.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.3.var)*0.25)
+
+ratio.nn4.1<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.4.var)*0.75)
+ratio.nn4.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.4.var)*0.5)
+ratio.nn4.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.919/0.88)-0.919/0.88*(1-0.919)*(0.01*2))^2)*match.4.var)*0.25)
+
+
+ratio.nn1<-rbind(
+  data.frame(values=ratio.nn1.1,R.sq=0.75,Control=1),
+  data.frame(values=ratio.nn1.2,R.sq=0.5,Control=1),
+  data.frame(values=ratio.nn1.3,R.sq=0.25,Control=1))
+
+ratio.nn2<-rbind(
+  data.frame(values=ratio.nn2.1,R.sq=0.75,Control=2),
+  data.frame(values=ratio.nn2.2,R.sq=0.5,Control=2),
+  data.frame(values=ratio.nn2.3,R.sq=0.25,Control=2))
+
+ratio.nn3<-rbind(
+  data.frame(values=ratio.nn3.1,R.sq=0.75,Control=3),
+  data.frame(values=ratio.nn3.2,R.sq=0.5,Control=3),
+  data.frame(values=ratio.nn3.3,R.sq=0.25,Control=3))
+
+ratio.nn4<-rbind(
+  data.frame(values=ratio.nn4.1,R.sq=0.75,Control=4),
+  data.frame(values=ratio.nn4.2,R.sq=0.5,Control=4),
+  data.frame(values=ratio.nn4.3,R.sq=0.25,Control=4))
+
+Ratios.nn<-rbind(ratio.nn1,ratio.nn2,ratio.nn3,ratio.nn4)
+
+
+
+
+
+
+
+Org.ratio1.1<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.75)*2/1
+Org.ratio1.2<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.5)*2/1
+Org.ratio1.3<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.25)*2/1
+
+Org.ratio2.1<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.75)*3/2
+Org.ratio2.2<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.5)*3/2
+Org.ratio2.3<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.25)*3/2
+
+Org.ratio3.1<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.75)*4/3
+Org.ratio3.2<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.5)*4/3
+Org.ratio3.3<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.25)*4/3
+
+Org.ratio4.1<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.75)*5/4
+Org.ratio4.2<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.5)*5/4
+Org.ratio4.3<-(1.96+DesiredPowerZ)^2/(((0.01^2)*mean(tot$moving_avg))*0.25)*5/4
+
+
+Org.ratio1<-rbind(
+  data.frame(values=Org.ratio1.1,R.sq=0.75,Control=1),
+  data.frame(values=Org.ratio1.2,R.sq=0.5,Control=1),
+  data.frame(values=Org.ratio1.3,R.sq=0.25,Control=1))
+
+Org.ratio2<-rbind(
+  data.frame(values=Org.ratio2.1,R.sq=0.75,Control=2),
+  data.frame(values=Org.ratio2.2,R.sq=0.5,Control=2),
+  data.frame(values=Org.ratio2.3,R.sq=0.25,Control=2))
+
+Org.ratio3<-rbind(
+  data.frame(values=Org.ratio3.1,R.sq=0.75,Control=3),
+  data.frame(values=Org.ratio3.2,R.sq=0.5,Control=3),
+  data.frame(values=Org.ratio3.3,R.sq=0.25,Control=3))
+
+Org.ratio4<-rbind(
+  data.frame(values=Org.ratio4.1,R.sq=0.75,Control=4),
+  data.frame(values=Org.ratio4.2,R.sq=0.5,Control=4),
+  data.frame(values=Org.ratio4.3,R.sq=0.25,Control=4))
+
+Org.ratios<-rbind(Org.ratio1,Org.ratio2,Org.ratio3,Org.ratio4)
+
+
+require(ggplot2)
+p1<-ggplot(data = Ratios, aes(x=as.factor(Control), y=values, fill=as.factor(R.sq))) + geom_boxplot()
+p1<-p1 + scale_fill_discrete(name = "R.sq")+xlab("The number of controls matched") + ylab("The number of cases required")+ylim(c(8500,66000))+ggtitle("A")
+
+p1.n<-ggplot(data = Ratios.n, aes(x=as.factor(Control), y=values, fill=as.factor(R.sq))) + geom_boxplot()
+p1.n<-p1.n + scale_fill_discrete(name = "R.sq")+xlab("The number of controls matched") + ylab("The number of cases required")+ylim(c(8500,66000))+ggtitle("B")
+
+p1.nn<-ggplot(data = Ratios.nn, aes(x=as.factor(Control), y=values, fill=as.factor(R.sq))) + geom_boxplot()
+p1.nn<-p1.nn + scale_fill_discrete(name = "R.sq")+xlab("The number of controls matched") + ylab("The number of cases required")+ylim(c(8500,66000))+ggtitle("C")
+
+p2<-ggplot(data = Org.ratios, aes(x=as.factor(Control), y=values, colour=as.factor(R.sq))) + geom_point()
+p2<-p2 + scale_colour_discrete(name = "R.sq")+xlab("The number of controls matched") + ylab("The number of cases required")+ylim(c(8500,66000))+ggtitle("D")
+
+
+
+library(ggplot2)
+library(gridExtra)
+png("FOLDER/SampleSizeExample.png",width=5*2,height=4*2,res=300,units="in")
+grid.arrange(p1, p1.n, p1.nn, p2,ncol = 2, nrow = 2)
+dev.off()
+
+
+
+
+
+
+ba.1.1<-(1.96+DesiredPowerZ)^2/(((((0.01*1/1)-1/1*(1-1)*(0.01*2))^2)*match.1.var)*0.5)
+ba.1.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.9/1)-0.9/1*(1-0.9)*(0.01*2))^2)*match.1.var)*0.5)
+ba.1.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.8/1)-0.8/1*(1-0.8)*(0.01*2))^2)*match.1.var)*0.5)
+
+ba.2.1<-(1.96+DesiredPowerZ)^2/(((((0.01*1/1.1)-1/1.1*(1-1)*(0.01*2))^2)*match.1.var)*0.5)
+ba.2.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.9/1.1)-0.9/1.1*(1-0.9)*(0.01*2))^2)*match.1.var)*0.5)
+ba.2.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.8/1.1)-0.8/1.1*(1-0.8)*(0.01*2))^2)*match.1.var)*0.5)
+
+ba.3.1<-(1.96+DesiredPowerZ)^2/(((((0.01*1/0.9)-1/0.9*(1-1)*(0.01*2))^2)*match.1.var)*0.5)
+ba.3.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.9/0.9)-0.9/0.9*(1-0.9)*(0.01*2))^2)*match.1.var)*0.5)
+ba.3.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.8/0.9)-0.8/0.9*(1-0.8)*(0.01*2))^2)*match.1.var)*0.5)
+
+
+ba.1<-rbind(
+  data.frame(values=ba.1.1,R.sq=1,Coef=1),
+  data.frame(values=ba.1.2,R.sq=0.9,Coef=1),
+  data.frame(values=ba.1.3,R.sq=0.8,Coef=1))
+
+
+ba.2<-rbind(
+  data.frame(values=ba.2.1,R.sq=1,Coef=1.1),
+  data.frame(values=ba.2.2,R.sq=0.9,Coef=1.1),
+  data.frame(values=ba.2.3,R.sq=0.8,Coef=1.1))
+
+ba.3<-rbind(
+  data.frame(values=ba.3.1,R.sq=1,Coef=0.9),
+  data.frame(values=ba.3.2,R.sq=0.9,Coef=0.9),
+  data.frame(values=ba.3.3,R.sq=0.8,Coef=0.9))
+
+BA1<-rbind(ba.1,ba.2,ba.3)
+
+
+
+ba.1.1<-(1.96+DesiredPowerZ)^2/(((((0.01*1/1)-1/1*(1-1)*(0.01*4))^2)*match.1.var)*0.5)
+ba.1.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.9/1)-0.9/1*(1-0.9)*(0.01*4))^2)*match.1.var)*0.5)
+ba.1.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.8/1)-0.8/1*(1-0.8)*(0.01*4))^2)*match.1.var)*0.5)
+
+ba.2.1<-(1.96+DesiredPowerZ)^2/(((((0.01*1/1.1)-1/1.1*(1-1)*(0.01*4))^2)*match.1.var)*0.5)
+ba.2.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.9/1.1)-0.9/1.1*(1-0.9)*(0.01*4))^2)*match.1.var)*0.5)
+ba.2.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.8/1.1)-0.8/1.1*(1-0.8)*(0.01*4))^2)*match.1.var)*0.5)
+
+ba.3.1<-(1.96+DesiredPowerZ)^2/(((((0.01*1/0.9)-1/0.9*(1-1)*(0.01*4))^2)*match.1.var)*0.5)
+ba.3.2<-(1.96+DesiredPowerZ)^2/(((((0.01*0.9/0.9)-0.9/0.9*(1-0.9)*(0.01*4))^2)*match.1.var)*0.5)
+ba.3.3<-(1.96+DesiredPowerZ)^2/(((((0.01*0.8/0.9)-0.8/0.9*(1-0.8)*(0.01*4))^2)*match.1.var)*0.5)
+
+
+ba.1<-rbind(
+  data.frame(values=ba.1.1,R.sq=1,Coef=1),
+  data.frame(values=ba.1.2,R.sq=0.9,Coef=1),
+  data.frame(values=ba.1.3,R.sq=0.8,Coef=1))
+
+
+ba.2<-rbind(
+  data.frame(values=ba.2.1,R.sq=1,Coef=1.1),
+  data.frame(values=ba.2.2,R.sq=0.9,Coef=1.1),
+  data.frame(values=ba.2.3,R.sq=0.8,Coef=1.1))
+
+ba.3<-rbind(
+  data.frame(values=ba.3.1,R.sq=1,Coef=0.9),
+  data.frame(values=ba.3.2,R.sq=0.9,Coef=0.9),
+  data.frame(values=ba.3.3,R.sq=0.8,Coef=0.9))
+
+BA2<-rbind(ba.1,ba.2,ba.3)
+
+
+
+
+
+
+ba.1.1<-(1.96+DesiredPowerZ)^2/(((((0.05*1/1)-1/1*(1-1)*(0.05*2))^2)*match.1.var)*0.5)
+ba.1.2<-(1.96+DesiredPowerZ)^2/(((((0.05*0.9/1)-0.9/1*(1-0.9)*(0.05*2))^2)*match.1.var)*0.5)
+ba.1.3<-(1.96+DesiredPowerZ)^2/(((((0.05*0.8/1)-0.8/1*(1-0.8)*(0.05*2))^2)*match.1.var)*0.5)
+
+ba.2.1<-(1.96+DesiredPowerZ)^2/(((((0.05*1/1.1)-1/1.1*(1-1)*(0.05*2))^2)*match.1.var)*0.5)
+ba.2.2<-(1.96+DesiredPowerZ)^2/(((((0.05*0.9/1.1)-0.9/1.1*(1-0.9)*(0.05*2))^2)*match.1.var)*0.5)
+ba.2.3<-(1.96+DesiredPowerZ)^2/(((((0.05*0.8/1.1)-0.8/1.1*(1-0.8)*(0.05*2))^2)*match.1.var)*0.5)
+
+ba.3.1<-(1.96+DesiredPowerZ)^2/(((((0.05*1/0.9)-1/0.9*(1-1)*(0.05*2))^2)*match.1.var)*0.5)
+ba.3.2<-(1.96+DesiredPowerZ)^2/(((((0.05*0.9/0.9)-0.9/0.9*(1-0.9)*(0.05*2))^2)*match.1.var)*0.5)
+ba.3.3<-(1.96+DesiredPowerZ)^2/(((((0.05*0.8/0.9)-0.8/0.9*(1-0.8)*(0.05*2))^2)*match.1.var)*0.5)
+
+
+ba.1<-rbind(
+  data.frame(values=ba.1.1,R.sq=1,Coef=1),
+  data.frame(values=ba.1.2,R.sq=0.9,Coef=1),
+  data.frame(values=ba.1.3,R.sq=0.8,Coef=1))
+
+
+ba.2<-rbind(
+  data.frame(values=ba.2.1,R.sq=1,Coef=1.1),
+  data.frame(values=ba.2.2,R.sq=0.9,Coef=1.1),
+  data.frame(values=ba.2.3,R.sq=0.8,Coef=1.1))
+
+ba.3<-rbind(
+  data.frame(values=ba.3.1,R.sq=1,Coef=0.9),
+  data.frame(values=ba.3.2,R.sq=0.9,Coef=0.9),
+  data.frame(values=ba.3.3,R.sq=0.8,Coef=0.9))
+
+BA3<-rbind(ba.1,ba.2,ba.3)
+
+
+
+ba.1.1<-(1.96+DesiredPowerZ)^2/(((((0.05*1/1)-1/1*(1-1)*(0.05*4))^2)*match.1.var)*0.5)
+ba.1.2<-(1.96+DesiredPowerZ)^2/(((((0.05*0.9/1)-0.9/1*(1-0.9)*(0.05*4))^2)*match.1.var)*0.5)
+ba.1.3<-(1.96+DesiredPowerZ)^2/(((((0.05*0.8/1)-0.8/1*(1-0.8)*(0.05*4))^2)*match.1.var)*0.5)
+
+ba.2.1<-(1.96+DesiredPowerZ)^2/(((((0.05*1/1.1)-1/1.1*(1-1)*(0.05*4))^2)*match.1.var)*0.5)
+ba.2.2<-(1.96+DesiredPowerZ)^2/(((((0.05*0.9/1.1)-0.9/1.1*(1-0.9)*(0.05*4))^2)*match.1.var)*0.5)
+ba.2.3<-(1.96+DesiredPowerZ)^2/(((((0.05*0.8/1.1)-0.8/1.1*(1-0.8)*(0.05*4))^2)*match.1.var)*0.5)
+
+ba.3.1<-(1.96+DesiredPowerZ)^2/(((((0.05*1/0.9)-1/0.9*(1-1)*(0.05*4))^2)*match.1.var)*0.5)
+ba.3.2<-(1.96+DesiredPowerZ)^2/(((((0.05*0.9/0.9)-0.9/0.9*(1-0.9)*(0.05*4))^2)*match.1.var)*0.5)
+ba.3.3<-(1.96+DesiredPowerZ)^2/(((((0.05*0.8/0.9)-0.8/0.9*(1-0.8)*(0.05*4))^2)*match.1.var)*0.5)
+
+
+ba.1<-rbind(
+  data.frame(values=ba.1.1,R.sq=1,Coef=1),
+  data.frame(values=ba.1.2,R.sq=0.9,Coef=1),
+  data.frame(values=ba.1.3,R.sq=0.8,Coef=1))
+
+
+ba.2<-rbind(
+  data.frame(values=ba.2.1,R.sq=1,Coef=1.1),
+  data.frame(values=ba.2.2,R.sq=0.9,Coef=1.1),
+  data.frame(values=ba.2.3,R.sq=0.8,Coef=1.1))
+
+ba.3<-rbind(
+  data.frame(values=ba.3.1,R.sq=1,Coef=0.9),
+  data.frame(values=ba.3.2,R.sq=0.9,Coef=0.9),
+  data.frame(values=ba.3.3,R.sq=0.8,Coef=0.9))
+
+BA4<-rbind(ba.1,ba.2,ba.3)
+
+
+b1<-ggplot(data = subset(BA1,R.sq>0.8), aes(x=as.factor(R.sq), y=values, fill=as.factor(Coef))) + geom_boxplot()
+b1<-b1 + scale_fill_discrete(name = expression(gamma[1]))+xlab("R.sq (exposure measurement error model)") + ylab("The number of cases required") +ggtitle("A")
+
+b2<-ggplot(data = subset(BA2,R.sq>0.8), aes(x=as.factor(R.sq), y=values, fill=as.factor(Coef))) + geom_boxplot()
+b2<-b2 + scale_fill_discrete(name = expression(gamma[1]))+xlab("R.sq (exposure measurement error model)") + ylab("The number of cases required") +ggtitle("B")
+
+
+b3<-ggplot(data = subset(BA3,R.sq>0.8), aes(x=as.factor(R.sq), y=values, fill=as.factor(Coef))) + geom_boxplot()
+b3<-b3 + scale_fill_discrete(name = expression(gamma[1]))+xlab("R.sq (exposure measurement error model)") + ylab("The number of cases required") +ggtitle("C")
+
+
+b4<-ggplot(data = subset(BA4,R.sq>0.8), aes(x=as.factor(R.sq), y=values, fill=as.factor(Coef))) + geom_boxplot()
+b4<-b4 + scale_fill_discrete(name = expression(gamma[1]))+xlab("R.sq (exposure measurement error model)") + ylab("The number of cases required") +ggtitle("D")
+
+library(ggplot2)
+library(gridExtra)
+png("FOLDER/SampleSizeExample_Figure2.png",width=5*2,height=4*1,res=300,units="in")
+grid.arrange(b1, b2, ncol = 2, nrow = 1)
+dev.off()
+
+library(ggplot2)
+library(gridExtra)
+png("FOLDER/SampleSizeExample_Figure3.png",width=5*2,height=4*1,res=300,units="in")
+grid.arrange(b3,b4, ncol = 2, nrow = 1)
+dev.off()
+
